@@ -34,7 +34,7 @@ bot.on("message", (msg) => {
 		bot.sendMessage(msg.chat.id, "Bhhh bololi");
 	}
 	if (msg.text.toString().toLowerCase().includes("lezione")) {
-		bot.sendMessage(msg.chat.id, "Non c'ho voglia.");
+		bot.sendMessage(msg.chat.id, "Non c'ho voglia di andare a lezione.");
 	}
 });
 
