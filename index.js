@@ -36,6 +36,9 @@ bot.on("message", (msg) => {
 	if (msg.text.toString().toLowerCase().includes("lezione")) {
 		bot.sendMessage(msg.chat.id, "Non c'ho voglia di andare a lezione.");
 	}
+	if (msg.text.toString().toLowerCase().includes("esplosiv")) {
+		bot.sendDocument(msg.chat.id, 'http://www.daidegasforum.com/images/386/esplosione-atomica-atomic-bomb.gif');
+	}
 });
 
 // comando di aiuto e di start
