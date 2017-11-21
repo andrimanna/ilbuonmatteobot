@@ -58,7 +58,7 @@ bot.onText(/\/pizza (.+)/, (pzz, match) => {
 		persone.unshift(pzz.from.first_name);
 		pizza.unshift(match[1].toLowerCase());
 		trovato = 0;
-		bot.sendMessage(pzz.chat.id, "Bene, " + pzz.from.first_name + " per te la " + pizza[trovato] + ".");
+		bot.sendMessage(pzz.chat.id, "Bene, " + pzz.from.first_name + " per te " + pizza[trovato] + ".");
 	} else{
 		pizza[trovato] = match[1].toLowerCase();
 		bot.sendMessage(pzz.chat.id, pzz.from.first_name + ", ho cambiato la tua pizza in " + pizza[trovato] + ".");
@@ -87,7 +87,7 @@ bot.onText(/\/sceglixaltro (.+)/, (pzz, match) => {
 			persone.unshift(nomepersona);
 			pizza.unshift(qualepizza);
 			trovato = 0;
-			bot.sendMessage(pzz.chat.id, "Bene, per " + nomepersona + " la " + qualepizza + ".");
+			bot.sendMessage(pzz.chat.id, "Bene, " + qualepizza + " per " + nomepersona + ".");
 		} else{
 			bot.sendSticker(pzz.chat.id, "CAADBAAD2QADEzLMAdbI38mV8YYsAg");
 			bot.sendMessage(pzz.chat.id, "Non puoi cambiare la pizza di un altro.");
