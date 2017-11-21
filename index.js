@@ -192,7 +192,6 @@ bot.onText(/\/ordine/, (pzz) => {
 	if (i==0) bot.sendMessage(pzz.chat.id, "Nessuno ha scelto.");
 	else {
 		testo.unshift("Ecco gli ordini delle pizze:\n");
-		//caloclo il totale
 		testo.push("\nTotale: " + controllato.length);
 		bot.sendMessage(pzz.chat.id, testo.join("\n"));
 	}
