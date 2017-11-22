@@ -180,7 +180,7 @@ bot.onText(/\/ordine/, (pzz) => {
 					trovato = 0;
 				}
 				quantepizze[trovato]++;
-			} else
+			}
 			j++;
 		}
 		i++;
