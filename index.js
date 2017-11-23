@@ -6,9 +6,24 @@ const token = '############';
  
 // avvio il bot in polling
 const bot = new TelegramBot(token, {polling: true});
+console.log("bot avviato");
+console.log("I messaggi ricevuti verranno stampati di seguito nel seguente formato: ID Chat, Gruppo, Nome, Congnome, Username, Data, Testo del messagio");
 
-// leggo tutti i messaggi per sfottere la gente
+// leggo tutti i messaggi
 bot.on("message", (msg) => {
+	//stampo cose sulla console
+	var data = new Date(msg.date*1000);
+	var testo = new Array();
+	testo.push(msg.chat.id);
+	if (msg.chat.title == undefined) testo.push("/");
+	else testo.push(msg.chat.title);
+	testo.push(msg.from.first_name);
+	testo.push(msg.from.last_name);
+	testo.push("@"+msg.from.username);
+	testo.push(data.getDate() + "/" + (data.getMonth()+1) + "/" + data.getFullYear() + " " + data.getHours() + ":" + data.getMinutes() + ":" + data.getSeconds());
+	testo.push(msg.text);
+	console.log(testo.join("\t"));
+	//sfotto la gente
 	if (msg.text.toString().toLowerCase().includes("pesto")) {
 		bot.sendMessage(msg.chat.id, "Mia mamma lo fa meglio!");
 	}
@@ -56,15 +71,15 @@ var pizza = new Array();
 var flag = 0;
 var trovato;
 bot.onText(/\/pizza (.+)/, (pzz, match) => {
-	trovato = persone.indexOf(pzz.from.first_name);  
+	trovato = persone.indexOf(pzz.from.username);  
 	if (trovato == -1){
-		persone.unshift(pzz.from.first_name);
+		persone.unshift(pzz.from.username);
 		pizza.unshift(match[1].toLowerCase());
 		trovato = 0;
 		bot.sendMessage(pzz.chat.id, "Bene, " + pzz.from.first_name + " per te " + pizza[trovato] + ".");
 	} else{
 		pizza[trovato] = match[1].toLowerCase();
-		bot.sendMessage(pzz.chat.id, pzz.from.first_name + ", ho cambiato la tua pizza in " + pizza[trovato] + ".");
+		bot.sendMessage(pzz.chat.id, pzz.from.first_name + ", ho cambiato la tua in " + pizza[trovato] + ".");
 	}
 	flag = 1;
 	//console.log(match[0]);
@@ -81,10 +96,11 @@ bot.onText(/\/pizza/, (pzz) => {
 //comando scegli per altro
 bot.onText(/\/sceglixaltro (.+)/, (pzz, match) => {
 	var spazio = match[1].indexOf(" ");
-	if (spazio == -1) bot.sendMessage(pzz.chat.id, pzz.from.first_name + " devi scrivere /sceglixaltro e il nome della persona e la pizza che ha scelto!");
+	if (spazio == -1) bot.sendMessage(pzz.chat.id, pzz.from.first_name + " devi scrivere /sceglixaltro seguito dall'username della persona e la pizza che ha scelto!");
+	else if (match[1].indexOf("@") == -1) bot.sendMessage(pzz.chat.id, pzz.from.first_name + " l'username inizia per @!");
 	else {
 		var qualepizza = match[1].slice(spazio + 1, match[1].length).toLowerCase();
-		var nomepersona = match[1].slice(0, spazio);
+		var nomepersona = match[1].slice(1, spazio);
 		trovato = persone.indexOf(nomepersona);  
 		if (trovato == -1){
 			persone.unshift(nomepersona);
@@ -127,7 +143,7 @@ bot.onText(/\/lista/, (pzz) => {
 	var testo = new Array();
 	var i=0;
 	while (persone[i] != undefined){
-		testo[i] = persone[i] + " -\t" + pizza [i];
+		testo[i] = "@" + persone[i] + " - " + pizza [i];
 		i++;
 	}
 	if (i==0) bot.sendMessage(pzz.chat.id, "Nessuno ha scelto.");
@@ -140,7 +156,7 @@ bot.onText(/\/lista/, (pzz) => {
 
 //comando cancella
 bot.onText(/\/cancella/, (pzz) => {
-	trovato = persone.indexOf(pzz.from.first_name);
+	trovato = persone.indexOf(pzz.from.username);
 	if (trovato == -1){
 		bot.sendMessage(pzz.chat.id, pzz.from.first_name + ", non possso cancellare la tua pizza se non me l'hai ancora detta.");
 	} else{
