@@ -54,6 +54,9 @@ bot.on("message", (msg) => {
 	if (msg.text.toString().toLowerCase().includes("esplosiv")) {
 		bot.sendDocument(msg.chat.id, 'http://www.daidegasforum.com/images/386/esplosione-atomica-atomic-bomb.gif');
 	}
+	if (msg.text.toString().toLowerCase().includes("latte")) {
+		bot.sendPhoto(msg.chat.id,"http://mannarella.tk/latte.jpg" );
+	}
 });
 
 // comando di aiuto e di start
