@@ -1,21 +1,27 @@
 {
-	"name": "ilbuonmatteobot",
-	"version": "2.3.4",
-	"description": "Bot del Buon Matteo",
-	"description": "ordina le pizze e sfotte la gente",
-	"main": "index.js",
-	"keywords": [
-		"telegram",
-		"telegram bot",
-		"il buon matteo",
-		"bot"
-	],
-	"author": "Mannarella Andrea",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/andrimanna/ilbuonmatteobot.git"
-	},
-	"dependencies": {
-		"node-telegram-bot-api": "^0.28.0"
-	}
+  "name": "ilbuonmatteobot",
+  "version": "3.1.2",
+  "description": "prenota il fornetto, ordina le pizze e sfotte la gente",
+  "main": "index.js",
+  "keywords": [
+    "telegram",
+    "telegram bot",
+    "il buon matteo",
+    "bot"
+  ],
+  "author": "Mannarella Andrea",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrimanna/ilbuonmatteobot.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "google-tts-api": "0.0.2",
+    "https": "^1.0.0",
+    "node-telegram-bot-api": "^0.28.0"
+  },
+  "os": [
+    "win32"
+  ]
 }
