@@ -1,12 +1,13 @@
+//disattiva messaggi errore
 console.error = function() {}
 
 // aggiungo le api
 const TelegramBot = require('node-telegram-bot-api');
 const googleTTS = require('google-tts-api');
 const timers = require('timers');
-var http = require('https');
-var fs = require('fs');
-var exec = require('child_process').execFile;
+const http = require('https');
+const fs = require('fs');
+const exec = require('child_process').execFile;
 
 // token di @BotFather 
 const token = '########';
@@ -74,10 +75,11 @@ bot.on("message", (msg) => {
 	if (msg.text.toString().toLowerCase().includes("uov")) {
 		bot.sendMessage(msg.chat.id, "Ma è nato prima l'uovo o la gallina?");
 	}
+	//se gruppo, manda un messaggio ogni 24 ore
 	if (msg.chat.title != undefined){
 		clearInterval(timermessaggi);
 		timermessaggi = setInterval(function() {
-			switch (Math.floor((Math.random() * 10) + 1)){
+			switch (Math.floor((Math.random() * 11) + 1)){
 				case 1:
 				bot.sendMessage(msg.chat.id, "Ma è nato prima l'uovo o la gallina?", {disable_notification:1});
 				break;
@@ -107,7 +109,10 @@ bot.on("message", (msg) => {
 				break;
 				case 10:
 				bot.sendMessage(msg.chat.id, "Mia mamma lo fa meglio!", {disable_notification:1});
-				break;	
+				break;
+				case 11:
+				bot.sendMessage(msg.chat.id, "Clariiiiiiiiiiii", {disable_notification:1});
+				break;
 			}		
 		}, 86400000);
 	}
@@ -116,29 +121,32 @@ bot.on("message", (msg) => {
 // comando di aiuto e di start
 bot.onText(/\/aiuto/, (msg) => {
 	bot.sendMessage(msg.chat.id, "mmmmm, stavo dormendo o giocando al computer");
-	bot.sendMessage(msg.chat.id, "Sono il bot del Buon Matteo. I miei compiti sono quelli di sfottere la gente e di prendere le ordinazini delle pizze. Per scegliere una pizza scrivi /pizza seguito dalla pizza che vuoi ordinare (es. /pizza margherita). È possibile scegliere per un altro con /sceglixaltro seguito dal'username della persona e che pizza vuole (es. /sceglixaltro @Pippo margherita). Non è possibile cambiare la scelta di qualcun altro. Per vedere tutte le ordinazioni già prese puoi scivere /ordine; invece per cancellare la tua pizza /cancella e per ricominciare puoi scrivere /reset.\n\nCredits by @mannarella.");
+	bot.sendMessage(msg.chat.id, "Sono il bot del Buon Matteo. I miei compiti sono quelli di sfottere la gente e di prendere le ordinazini delle pizze. Per scegliere una pizza scrivi /pizza seguito dalla pizza che vuoi ordinare (es. /pizza margherita). È possibile scegliere per un altro con /sceglixaltro seguito dal'username della persona e che pizza vuole (es. /sceglixaltro @Pippo margherita). Non è possibile cambiare la scelta di qualcun altro. Per vedere tutte le ordinazioni già prese puoi scivere /ordine; invece per cancellare la tua pizza /cancella e per ricominciare puoi scrivere /reset.Per prenotare il fornetto per il pasto più vicino manda /prenota e se cambi idea /sprenota. Se hai bisogno di un messaggio vocale manda /dimmi seguito da quello che vuoi ascoltare.\n\nCredits by @mannarella.");
 });
 bot.onText(/\/start/, (msg) => {
 	bot.sendMessage(msg.chat.id, "Non c'ho voglia.");
 });
 
 //comando per parlare
-var file, flag1 = 0;
+var file, flag1 = 0, aspetta=null;
 bot.onText(/\/dimmi (.+)/, (msg, match) => {
-	if (match[1][200] == null) {
-		bot.sendChatAction(msg.chat.id, "record_audio");
-		googleTTS(match[1], 'it', 1).then(function (url) {
-			file = fs.createWriteStream("prova.mp3");
-			var request = http.get(url, function(response) {
-				response.pipe(file);
-				exec('encode.bat', function() {
-					fs.unlink('prova.mp3');
-					bot.sendVoice(msg.chat.id, "audio.ogg");
-					fs.unlink('audio.ogg');
+	if(aspetta==null){
+		if (match[1][200] == null) {
+			aspetta = setTimeout(function() {aspetta = null;}, 5000);
+			bot.sendChatAction(msg.chat.id, "record_audio");
+			googleTTS(match[1], 'it', 0.30).then(function (url) {
+				file = fs.createWriteStream("prova.mp3");
+				var request = http.get(url, function(response) {
+					response.pipe(file);
+					exec('encode.bat', function() {
+						fs.unlink('prova.mp3');
+						bot.sendVoice(msg.chat.id, "audio.ogg");
+						fs.unlink('audio.ogg');
+					});
 				});
 			});
-		});
-	} else bot.sendMessage(msg.chat.id, "mmmmm, mi stanco a parlare così tanto.");
+		} else bot.sendMessage(msg.chat.id, "mmmmm, mi stanco a parlare così tanto.");
+	} else bot.sendMessage(msg.chat.id, "Oooooooo, uno alla volta!");
 	sicuro = 0;
 	flag1 = 1;
 });
@@ -151,12 +159,7 @@ bot.onText(/\/dimmi/, (msg) => {
 });
 
 //comando prenotazione fornetto
-var orario;
-var fine;
-var timerforno = null;
-var personapren;
-var scherzo = Math.floor((Math.random() * 2) + 1);
-
+var orario, fine, timerforno = null, personapren, scherzo = Math.floor((Math.random() * 2) + 1);
 bot.onText(/\/prenota/, (frn) => {
 	if ((frn.from.username == "Mannarella") || (frn.from.username == "Eroe69") || (frn.from.username == "Alfonso_vx") || (frn.from.username == "lordwilliamterzo") || (frn.from.username == "Daniela_z") || (frn.from.username == "Edolomba23")){
 		if (scherzo == 1){
@@ -168,7 +171,7 @@ bot.onText(/\/prenota/, (frn) => {
 						fine = (15 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
 						bot.sendMessage(frn.chat.id, "Bene, " + frn.from.first_name + " ha prenotato il fornetto per oggi a parnzo.");
 					}	else {
-						fine = (23 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
+						fine = (24 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
 						bot.sendMessage(frn.chat.id, "Bene, " + frn.from.first_name + " ha prenotato il fornetto per stasera a cena.");
 					}
 					timerforno = setTimeout(function() {bot.sendMessage(frn.chat.id, frn.from.first_name + ", la tua prenotazione è scaduta."); timerforno=null;}, fine);
@@ -183,11 +186,11 @@ bot.onText(/\/prenota/, (frn) => {
 						fine = (15 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
 						bot.sendMessage(frn.chat.id, "Non è vero, " + frn.from.first_name + " ha prenotato il fornetto per oggi a parnzo.");
 					}	else {
-						fine = (23 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
+						fine = (24 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
 						bot.sendMessage(frn.chat.id, "Non è vero, " + frn.from.first_name + " ha prenotato il fornetto per stasera a cena.");
 					}
 					timerforno = setTimeout(function() {bot.sendMessage(frn.chat.id, frn.from.first_name + ", la tua prenotazione è scaduta."); timerforno=null;}, fine);
-				} else bot.sendMessage(frn.chat.id, "Non è vero, il fornetto è gia stato prenotato da @" + personapren);
+				} else bot.sendMessage(frn.chat.id, "Non è vero, il fornetto è già stato prenotato da @" + personapren);
 			}, 6000);	
 			scherzo = Math.floor((Math.random() * 2) + 1);
 		}
