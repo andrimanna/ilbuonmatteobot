@@ -5,9 +5,9 @@ console.error = function() {}
 const TelegramBot = require('node-telegram-bot-api');
 const googleTTS = require('google-tts-api');
 const timers = require('timers');
-const http = require('https');
-const fs = require('fs');
-const exec = require('child_process').execFile;
+var http = require('https');
+var fs = require('fs');
+var exec = require('child_process').execFile;
 
 // token di @BotFather 
 const token = '########';
@@ -149,6 +149,16 @@ bot.onText(/\/dimmi (.+)/, (msg, match) => {
 	} else bot.sendMessage(msg.chat.id, "Oooooooo, uno alla volta!");
 	sicuro = 0;
 	flag1 = 1;
+});
+
+//comando per scrivere
+bot.onText(/\/scrivi (.+)/, (msg, match) => {
+	if (msg.chat.id==#######)
+		bot.sendMessage(##########, match[1]);
+	else {
+		bot.sendChatAction(msg.chat.id, "record_audio");
+		bot.sendVoice(msg.chat.id, "dipre.ogg");
+	}
 });
 
 //comando errato per parlare
