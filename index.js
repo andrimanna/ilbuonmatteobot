@@ -1,27 +1,45 @@
 //disattiva messaggi errore
-console.error = function() {}
+//console.error = function() {}
+
+//id conversazioni e token di @BotFather
+const admin = ######;
+const gruppo = ######;
+const userforn = new Array("######"); 
+const token = '######';
 
 // aggiungo le api
 const TelegramBot = require('node-telegram-bot-api');
 const googleTTS = require('google-tts-api');
-const timers = require('timers');
-var http = require('https');
-var fs = require('fs');
-var exec = require('child_process').execFile;
+const http = require('https');
+const fs = require('fs');
+const exec = require('child_process').execFile;
 
-// token di @BotFather 
-const token = '########';
- 
+
 // avvio il bot in polling
 const bot = new TelegramBot(token, {polling: true});
-console.log("Bot avviato.");
-console.log("I messaggi ricevuti verranno stampati di seguito nel seguente formato: ID Chat, Gruppo, Nome, Congnome, Username, Data, Testo del messagio");
+
+//creo il file di log
+var logfile, data;
+function nomefile() {
+	logfile= new Date();
+	if ((logfile.getMonth()+1)>9)
+		logfile = (logfile.getMonth()+1) + "_" + (logfile.getFullYear()-2000);
+	else logfile = "log\\0" +(logfile.getMonth()+1) + "_" + (logfile.getFullYear()-2000)+".txt";
+	if (!(fs.existsSync(logfile))) {
+		fs.writeFileSync(logfile, "I messaggi sono riportati di seguito nel seguente formato: ID Chat, Gruppo, Nome, Congnome, Username, Data, Testo del messagio");  
+	}
+};
+nomefile();
+data= new Date();
+data = "Bot avviato il " + data.getDate() + "/" + (data.getMonth()+1) + "/" + data.getFullYear() + " alle " + data.getHours() + ":" + data.getMinutes() + ":" + data.getSeconds();
+console.log(data);
+fs.appendFile(logfile,"\n" + data);
 
 // leggo tutti i messaggi
 var timermessaggi;
 bot.on("message", (msg) => {
-	//stampo cose sulla console
-	var data = new Date(msg.date*1000);
+	//stampo cose su file
+	data = new Date(msg.date*1000);
 	var testo = new Array();
 	testo.push(msg.chat.id);
 	if (msg.chat.title == undefined) testo.push("/");
@@ -31,7 +49,9 @@ bot.on("message", (msg) => {
 	testo.push("@"+msg.from.username);
 	testo.push(data.getDate() + "/" + (data.getMonth()+1) + "/" + data.getFullYear() + " " + data.getHours() + ":" + data.getMinutes() + ":" + data.getSeconds());
 	testo.push(msg.text);
-	console.log(testo.join("\t"));
+	nomefile()
+	fs.appendFile(logfile,"\n" + testo.join("\t"));
+	
 	//sfotto la gente
 	if (msg.text.toString().toLowerCase().includes("pesto")) {
 		bot.sendMessage(msg.chat.id, "Mia mamma lo fa meglio!");
@@ -135,11 +155,10 @@ bot.onText(/\/dimmi (.+)/, (msg, match) => {
 			aspetta = setTimeout(function() {aspetta = null;}, 5000);
 			bot.sendChatAction(msg.chat.id, "record_audio");
 			googleTTS(match[1], 'it', 0.30).then(function (url) {
-				file = fs.createWriteStream("prova.mp3");
+				file = fs.createWriteStream("data\\prova.mp3");
 				var request = http.get(url, function(response) {
 					response.pipe(file);
 					exec('encode.bat', function() {
-						fs.unlink('prova.mp3');
 						bot.sendVoice(msg.chat.id, "audio.ogg");
 						fs.unlink('audio.ogg');
 					});
@@ -153,11 +172,27 @@ bot.onText(/\/dimmi (.+)/, (msg, match) => {
 
 //comando per scrivere
 bot.onText(/\/scrivi (.+)/, (msg, match) => {
-	if (msg.chat.id==#######)
-		bot.sendMessage(##########, match[1]);
+	if (msg.chat.id==admin)
+		bot.sendMessage(gruppo, match[1]);
 	else {
 		bot.sendChatAction(msg.chat.id, "record_audio");
-		bot.sendVoice(msg.chat.id, "dipre.ogg");
+		bot.sendVoice(msg.chat.id, "data\\dipre.ogg");
+	}
+});
+
+//comando per richiedere log
+var nomechiesto;
+bot.onText(/\/log (.+)/, (msg, match) => {
+	if (msg.chat.id==admin){
+		bot.sendChatAction(msg.chat.id, "upload_document");
+		nomechiesto= "log\\" + match[1] + ".txt";
+		if (fs.existsSync(nomechiesto))
+			setTimeout(function() {bot.sendDocument(msg.chat.id, nomechiesto);}, 2000);
+		else bot.sendMessage(msg.chat.id, "Non ho quello che cerchi.");
+	}
+	else {
+		bot.sendChatAction(msg.chat.id, "record_audio");
+		bot.sendVoice(msg.chat.id, "data\\dipre.ogg");
 	}
 });
 
@@ -169,11 +204,10 @@ bot.onText(/\/dimmi/, (msg) => {
 });
 
 //comando prenotazione fornetto
-var orario, fine, timerforno = null, personapren, scherzo = Math.floor((Math.random() * 2) + 1);
+var orario, fine, timerforno = null, personapren, scherzo = 0;
 bot.onText(/\/prenota/, (frn) => {
-	if ((frn.from.username == "Mannarella") || (frn.from.username == "Eroe69") || (frn.from.username == "Alfonso_vx") || (frn.from.username == "lordwilliamterzo") || (frn.from.username == "Daniela_z") || (frn.from.username == "Edolomba23")){
-		if (scherzo == 1){
-			scherzo = Math.floor((Math.random() * 2) + 1);
+	if (-1 != userforn.indexOf(frn.from.username)){
+		if (scherzo < 3){
 			orario = new Date();
 				if (timerforno == null) {
 					personapren = frn.from.username;
@@ -201,9 +235,10 @@ bot.onText(/\/prenota/, (frn) => {
 					}
 					timerforno = setTimeout(function() {bot.sendMessage(frn.chat.id, frn.from.first_name + ", la tua prenotazione è scaduta."); timerforno=null;}, fine);
 				} else bot.sendMessage(frn.chat.id, "Non è vero, il fornetto è già stato prenotato da @" + personapren);
-			}, 6000);	
-			scherzo = Math.floor((Math.random() * 2) + 1);
+			}, 6000);
 		}
+		scherzo ++;
+		if (scherzo == 4) scherzo = 0;
 	} else {
 		bot.sendSticker(frn.chat.id, "CAADBAAD2QADEzLMAdbI38mV8YYsAg");
 		bot.sendMessage(frn.chat.id, "Tu non puoi prenotare il fornetto.");
