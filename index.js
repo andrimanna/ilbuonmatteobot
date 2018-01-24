@@ -5,7 +5,7 @@ console.error = function() {}
 const admin = ########;
 const gruppo = ########;
 const userforn = new Array("########"); 
-const token = "########";
+const token = '########';
 
 // aggiungo le api
 const TelegramBot = require('node-telegram-bot-api');
@@ -13,7 +13,6 @@ const googleTTS = require('google-tts-api');
 const http = require('https');
 const fs = require('fs');
 const exec = require('child_process').execFile;
-
 
 // avvio il bot in polling
 const bot = new TelegramBot(token, {polling: true});
@@ -69,10 +68,10 @@ bot.on("message", (msg) => {
 		bot.sendMessage(msg.chat.id, "È stata Clarissa!");
 	}
 	if (msg.text.toString().toLowerCase().includes("riso")) {
-		bot.sendSticker(frn.chat.id, "CAADBAADmwADHeI6AmqjvRWGfY8BAg");
+		bot.sendSticker(msg.chat.id, "CAADBAADmwADHeI6AmqjvRWGfY8BAg");
 	}
 	if (msg.text.toString().toLowerCase().includes("lecc")) {
-		bot.sendSticker(frn.chat.id, "CAADBAADnAADHeI6Aqwc0Ytdr_JPAg");
+		bot.sendSticker(msg.chat.id, "CAADBAADnAADHeI6Aqwc0Ytdr_JPAg");
 	}
 	if (msg.text.toString().toLowerCase().includes("pomodor")) {
 		bot.sendMessage(msg.chat.id, "Bhhh bololi");
@@ -84,7 +83,7 @@ bot.on("message", (msg) => {
 		bot.sendDocument(msg.chat.id, 'http://www.daidegasforum.com/images/386/esplosione-atomica-atomic-bomb.gif');
 	}
 	if (msg.text.toString().toLowerCase().includes("latte")) {
-		bot.sendSticker(frn.chat.id, "CAADBAADngADHeI6Aia53Y__sLfvAg");
+		bot.sendSticker(msg.chat.id, "CAADBAADngADHeI6Aia53Y__sLfvAg");
 	}
 	if (msg.text.toString().toLowerCase().includes("friarielli")) {
 		bot.sendMessage(msg.chat.id, "Volevi dire cime di rapa?");
@@ -110,7 +109,7 @@ bot.on("message", (msg) => {
 				bot.sendMessage(msg.chat.id, "Qualcuno ha detto cime di rapa?", {disable_notification:1});
 				break;
 				case 4:
-				bot.sendPhoto(msg.chat.id,"http://mannarella.tk/latte.jpg", {disable_notification:1});
+				bot.sendSticker(msg.chat.id, "CAADBAADngADHeI6Aia53Y__sLfvAg", {disable_notification:1});
 				break;
 				case 5:
 				bot.sendMessage(msg.chat.id, "Non c'ho voglia di andare a lezione.", {disable_notification:1});
@@ -119,10 +118,10 @@ bot.on("message", (msg) => {
 				bot.sendMessage(msg.chat.id, "Bhhh bololi", {disable_notification:1});
 				break;
 				case 7:
-				bot.sendPhoto(msg.chat.id,"http://mannarella.tk/leccato.jpg", {disable_notification:1});
+				bot.sendSticker(msg.chat.id, "CAADBAADnAADHeI6Aqwc0Ytdr_JPAg", {disable_notification:1});
 				break;
 				case 8:
-				bot.sendPhoto(msg.chat.id,"http://mannarella.tk/matteo.jpg", {disable_notification:1});
+				bot.sendSticker(msg.chat.id, "CAADBAADmwADHeI6AmqjvRWGfY8BAg", {disable_notification:1});
 				break;
 				case 9:
 				bot.sendMessage(msg.chat.id, "Che schifo il sugo!", {disable_notification:1});
@@ -224,7 +223,7 @@ bot.onText(/\/prenota/, (frn) => {
 						fine = (22 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
 						bot.sendMessage(frn.chat.id, "Bene, " + frn.from.first_name + " ha prenotato il fornetto per stasera a cena.");
 					}
-					timerforno = setTimeout(function() {bot.sendMessage(frn.chat.id, "Il fornetto ora è libero"); timerforno=null;}, fine);
+					timerforno = setTimeout(function() {bot.sendMessage(frn.chat.id, "Il fornetto ora è libero", {disable_notification:1}); timerforno=null;}, fine);
 				} else bot.sendMessage(frn.chat.id, "Il fornetto è gia stato prenotato da @" + personapren);
 		} else {
 			bot.sendMessage(frn.chat.id, "Siccome mi stai antipatico, non puoi prenotare il fornetto oggi.");
@@ -244,7 +243,7 @@ bot.onText(/\/prenota/, (frn) => {
 						fine = (22 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
 						bot.sendMessage(frn.chat.id, "Bene, " + frn.from.first_name + " ha prenotato il fornetto per stasera a cena.");
 					}
-					timerforno = setTimeout(function() {bot.sendMessage(frn.chat.id, "Il fornetto ora è libero"); timerforno=null;}, fine);
+					timerforno = setTimeout(function() {bot.sendMessage(frn.chat.id, "Il fornetto ora è libero", {disable_notification:1}); timerforno=null;}, fine);
 				} else bot.sendMessage(frn.chat.id, "Non è vero, il fornetto è già stato prenotato da @" + personapren);
 			}, 6000);
 		}
@@ -266,7 +265,6 @@ bot.onText(/\/sprenota/, (frn) => {
 			timerforno=null;
 		} else {
 			bot.sendSticker(frn.chat.id, "CAADAgADuQADEmARAzMSCb-uZBAHAg");
-			bot.sendMessage(frn.chat.id, "Non puoi sprenotare il fornetto ad un altro.");
 		}
 	} else {
 		bot.sendMessage(frn.chat.id, "Il fonetto non è prenotato.");
@@ -317,7 +315,6 @@ bot.onText(/\/sceglixaltro (.+)/, (pzz, match) => {
 			bot.sendMessage(pzz.chat.id, "Bene, " + qualepizza + " per " + nomepersona + ".");
 		} else{
 			bot.sendSticker(pzz.chat.id, "CAADBAAD8QADEzLMAetg5uanapKwAg");
-			bot.sendMessage(pzz.chat.id, "Non puoi cambiare la pizza di un altro.");
 		}
 	}
 	flag = 1;
