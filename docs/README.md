@@ -1,11 +1,11 @@
 # @Ilbuonmatteobot
 
-Sono il bot del Buon Matteo. I miei compiti sono quelli di prenotare il fornetto, sfottere la gente e di prendere le ordinazini delle pizze. Per scegliere una pizza scrivi /pizza seguito dalla pizza che vuoi ordinare (es. /pizza margherita). È possibile scegliere per un altro con /sceglixaltro seguito dall'username della persona e che pizza vuole (es. /sceglixaltro @Pippo margherita). Non è possibile cambiare la scelta di qualcun altro. Per vedere tutte le ordinazioni già prese puoi scivere /ordine; invece per cancellare la tua pizza /cancella e per ricominciare puoi scrivere /reset. Per prenotare il fornetto per il pasto più vicino manda /prenota e se cambi idea /sprenota. Se hai bisogno di un messaggio vocale manda /dimmi seguito da quello che vuoi ascoltare. L'admin ha il potere di inoltrare i messaggi con /scrivi "testo" e di scaricare il log delle conversazioni con /log "mese"_"anno"
+Sono il bot del Buon Matteo. I miei compiti sono quelli di prenotare il fornetto, sfottere la gente e di prendere le ordinazini delle pizze. Per scegliere una pizza scrivi /pizza seguito dalla pizza che vuoi ordinare (es. /pizza margherita). È possibile scegliere per un altro con /sceglixaltro seguito dall'username della persona e che pizza vuole (es. /sceglixaltro @Pippo margherita). Non è possibile cambiare la scelta di qualcun altro. Per vedere tutte le ordinazioni già prese puoi scivere /ordine; invece per cancellare la tua pizza /cancella e per ricominciare puoi scrivere /reset. Per prenotare il fornetto per il pasto più vicino manda /prenota e se cambi idea /sprenota. Se hai bisogno di un messaggio vocale manda /dimmi seguito da quello che vuoi ascoltare. L'admin ha il potere di inoltrare i messaggi con /scrivi "testo" e di scaricare il log delle conversazioni con /log "mese"_"anno".
 
 
 ## Se vuoi eseguirlo per conto tuo
 
-Segui queste istruzioni se vuoi eseguire il bot Telegram su un tuo server Node JS
+Segui queste istruzioni se vuoi eseguire il bot Telegram su un tuo server Node JS:
 
 ### Prerequisiti
 
@@ -27,7 +27,7 @@ Se hai a disposizione il chat id della tua conversazione e quella del gruppo dov
 ```
 const admin = ########;
 const gruppo = ########;
-const token = "########";
+const token = '########';
 ```
 
 ## Esecuzione
@@ -52,8 +52,8 @@ Personalizzalo come ti pare, se vuoi puoi vedere la [documentazione ufficialedi 
 
 ## Licenza
 
-Questo progetto è sotto licenza MIT
+Questo progetto è sotto licenza MIT.
 
 ## Ringraziamenti
 
-* Tutti i miei amici.
+Tutti i miei amici.
