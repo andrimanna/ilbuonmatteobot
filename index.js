@@ -1,11 +1,11 @@
 //disattiva messaggi errore
-//console.error = function() {}
+console.error = function() {}
 
 //id conversazioni e token di @BotFather
-const admin = ######;
-const gruppo = ######;
-const userforn = new Array("######"); 
-const token = '######';
+const admin = ########;
+const gruppo = ########;
+const userforn = new Array("########"); 
+const token = "########";
 
 // aggiungo le api
 const TelegramBot = require('node-telegram-bot-api');
@@ -69,10 +69,10 @@ bot.on("message", (msg) => {
 		bot.sendMessage(msg.chat.id, "È stata Clarissa!");
 	}
 	if (msg.text.toString().toLowerCase().includes("riso")) {
-		bot.sendPhoto(msg.chat.id,"http://mannarella.tk/matteo.jpg" );
+		bot.sendSticker(frn.chat.id, "CAADBAADmwADHeI6AmqjvRWGfY8BAg");
 	}
 	if (msg.text.toString().toLowerCase().includes("lecc")) {
-		bot.sendPhoto(msg.chat.id,"http://mannarella.tk/leccato.jpg" );
+		bot.sendSticker(frn.chat.id, "CAADBAADnAADHeI6Aqwc0Ytdr_JPAg");
 	}
 	if (msg.text.toString().toLowerCase().includes("pomodor")) {
 		bot.sendMessage(msg.chat.id, "Bhhh bololi");
@@ -84,7 +84,7 @@ bot.on("message", (msg) => {
 		bot.sendDocument(msg.chat.id, 'http://www.daidegasforum.com/images/386/esplosione-atomica-atomic-bomb.gif');
 	}
 	if (msg.text.toString().toLowerCase().includes("latte")) {
-		bot.sendPhoto(msg.chat.id,"http://mannarella.tk/latte.jpg" );
+		bot.sendSticker(frn.chat.id, "CAADBAADngADHeI6Aia53Y__sLfvAg");
 	}
 	if (msg.text.toString().toLowerCase().includes("friarielli")) {
 		bot.sendMessage(msg.chat.id, "Volevi dire cime di rapa?");
@@ -211,29 +211,40 @@ bot.onText(/\/prenota/, (frn) => {
 			orario = new Date();
 				if (timerforno == null) {
 					personapren = frn.from.username;
-					if (orario.getHours()<15){
-						fine = (15 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
-						bot.sendMessage(frn.chat.id, "Bene, " + frn.from.first_name + " ha prenotato il fornetto per oggi a parnzo.");
+					if ((orario.getHours()<14) || (orario.getHours()>21)){
+						if ((orario.getHours()>21) || (orario.getHours()<24)){
+							fine = 14*3600000 + (24 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
+							bot.sendMessage(frn.chat.id, "Bene, " + frn.from.first_name + " ha prenotato il fornetto per domani a pranzo.");
+						}
+						else{
+							fine = (14 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
+							bot.sendMessage(frn.chat.id, "Bene, " + frn.from.first_name + " ha prenotato il fornetto per oggi a pranzo.");
+						}
 					}	else {
-						fine = (24 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
+						fine = (22 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
 						bot.sendMessage(frn.chat.id, "Bene, " + frn.from.first_name + " ha prenotato il fornetto per stasera a cena.");
 					}
-					timerforno = setTimeout(function() {bot.sendMessage(frn.chat.id, frn.from.first_name + ", la tua prenotazione è scaduta."); timerforno=null;}, fine);
+					timerforno = setTimeout(function() {bot.sendMessage(frn.chat.id, "Il fornetto ora è libero"); timerforno=null;}, fine);
 				} else bot.sendMessage(frn.chat.id, "Il fornetto è gia stato prenotato da @" + personapren);
 		} else {
 			bot.sendMessage(frn.chat.id, "Siccome mi stai antipatico, non puoi prenotare il fornetto oggi.");
 			setTimeout(function() {
 				orario = new Date();
 				if (timerforno == null) {
-					personapren = frn.from.username;
-					if (orario.getHours()<15){
-						fine = (15 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
-						bot.sendMessage(frn.chat.id, "Non è vero, " + frn.from.first_name + " ha prenotato il fornetto per oggi a parnzo.");
+					if ((orario.getHours()<14) || (orario.getHours()>21)){
+						if ((orario.getHours()>21) || (orario.getHours()<24)){
+							fine = 14*3600000 + (24 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
+							bot.sendMessage(frn.chat.id, "Bene, " + frn.from.first_name + " ha prenotato il fornetto per domani a pranzo.");
+						}
+						else{
+							fine = (14 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
+							bot.sendMessage(frn.chat.id, "Bene, " + frn.from.first_name + " ha prenotato il fornetto per oggi a pranzo.");
+						}
 					}	else {
-						fine = (24 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
-						bot.sendMessage(frn.chat.id, "Non è vero, " + frn.from.first_name + " ha prenotato il fornetto per stasera a cena.");
+						fine = (22 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
+						bot.sendMessage(frn.chat.id, "Bene, " + frn.from.first_name + " ha prenotato il fornetto per stasera a cena.");
 					}
-					timerforno = setTimeout(function() {bot.sendMessage(frn.chat.id, frn.from.first_name + ", la tua prenotazione è scaduta."); timerforno=null;}, fine);
+					timerforno = setTimeout(function() {bot.sendMessage(frn.chat.id, "Il fornetto ora è libero"); timerforno=null;}, fine);
 				} else bot.sendMessage(frn.chat.id, "Non è vero, il fornetto è già stato prenotato da @" + personapren);
 			}, 6000);
 		}
