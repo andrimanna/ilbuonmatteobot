@@ -1,1 +1,7 @@
 theme: jekyll-theme-modernist
+title: [Bot de Il Buon Matteo]
+description: [A short description of your site's purpose]
+show_downloads: [true]
+google_analytics: [UA-113094486-1]
+github:
+  zip_url: http://example.com/download.zip
