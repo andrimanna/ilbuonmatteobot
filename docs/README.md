@@ -39,7 +39,7 @@ launch.bat
 
 ## Personalizzalo
 
-Personalizzalo come ti pare, se vuoi puoi vedere la [documentazione ufficialedi telegram](https://core.telegram.org/bots/api).
+Personalizzalo come ti pare, se vuoi puoi vedere la [documentazione ufficiale di telegram](https://core.telegram.org/bots/api).
 
 ## Costruito con
 
