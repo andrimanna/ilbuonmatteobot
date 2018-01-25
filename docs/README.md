@@ -1,6 +1,8 @@
 # @Ilbuonmatteobot
 
+<div class="text-justify">
 Sono il bot del Buon Matteo. I miei compiti sono quelli di prenotare il fornetto, sfottere la gente e di prendere le ordinazini delle pizze. Per scegliere una pizza scrivi /pizza seguito dalla pizza che vuoi ordinare (es. /pizza margherita). È possibile scegliere per un altro con /sceglixaltro seguito dall'username della persona e che pizza vuole (es. /sceglixaltro @Pippo margherita). Non è possibile cambiare la scelta di qualcun altro. Per vedere tutte le ordinazioni già prese puoi scivere /ordine; invece per cancellare la tua pizza /cancella e per ricominciare puoi scrivere /reset. Per prenotare il fornetto per il pasto più vicino manda /prenota e se cambi idea /sprenota. Se hai bisogno di un messaggio vocale manda /dimmi seguito da quello che vuoi ascoltare. L'admin ha il potere di inoltrare i messaggi con /scrivi "testo" e di scaricare il log delle conversazioni con /log "mese"_"anno".
+</div>
 
 
 ## Se vuoi eseguirlo per conto tuo
@@ -20,9 +22,11 @@ Scarica i file di questo progetto in una cartella, posizionati dentro con un pro
 npm intall
 ```
 
+<div class="text-justify">
 Questo comado installerà tutte le dipendenze necessarie per il corretto funzionamento.
 Apri il file index.js con l'editor di testo che ti piace di più (es notepad++) ed inderisci il tuo token al posto dei ######.
 Se hai a disposizione il chat id della tua conversazione e quella del gruppo dove hai intenzione di usarlo sostituisili al posto dei ###### mostrati di seguito:
+</div>
 
 ```
 const admin = ########;
