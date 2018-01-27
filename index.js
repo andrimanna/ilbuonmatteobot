@@ -94,6 +94,14 @@ bot.on("message", (msg) => {
 	if (msg.text.toString().toLowerCase().includes("uov")) {
 		bot.sendMessage(msg.chat.id, "Ma è nato prima l'uovo o la gallina?");
 	}
+	if (msg.text.toString().toLowerCase().includes("addio")) {
+		bot.sendChatAction(msg.chat.id, "record_audio");
+		bot.sendVoice(msg.chat.id, "data\\arrive.ogg");
+	}
+	if (msg.text.toString().toLowerCase().includes("aggiusta")) {
+		bot.sendChatAction(msg.chat.id, "record_audio");
+		bot.sendVoice(msg.chat.id, "data\\bob.ogg");
+	}
 	//se gruppo, manda un messaggio ogni 24 ore
 	if (msg.chat.title != undefined){
 		clearInterval(timermessaggi);
@@ -211,7 +219,7 @@ bot.onText(/\/prenota/, (frn) => {
 				if (timerforno == null) {
 					personapren = frn.from.username;
 					if ((orario.getHours()<14) || (orario.getHours()>21)){
-						if ((orario.getHours()>21) || (orario.getHours()<24)){
+						if ((orario.getHours()>21) && (orario.getHours()<24)){
 							fine = 14*3600000 + (24 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
 							bot.sendMessage(frn.chat.id, "Bene, " + frn.from.first_name + " ha prenotato il fornetto per domani a pranzo.");
 						}
@@ -231,7 +239,7 @@ bot.onText(/\/prenota/, (frn) => {
 				orario = new Date();
 				if (timerforno == null) {
 					if ((orario.getHours()<14) || (orario.getHours()>21)){
-						if ((orario.getHours()>21) || (orario.getHours()<24)){
+						if ((orario.getHours()>21) && (orario.getHours()<24)){
 							fine = 14*3600000 + (24 - orario.getHours()) * 3600000 - orario.getMinutes() * 60000 - orario.getSeconds() * 1000;
 							bot.sendMessage(frn.chat.id, "Bene, " + frn.from.first_name + " ha prenotato il fornetto per domani a pranzo.");
 						}
